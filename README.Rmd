@@ -9,6 +9,7 @@ output: github_document
 *Installation:* use devtools::install_github()...
 *Test Coverage:* see test below
 
+
 ```{r, echo=FALSE, results='asis'}
 cat(readLines("coverage.md"), sep = "\n")
 ```
