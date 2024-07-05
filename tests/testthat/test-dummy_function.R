@@ -23,3 +23,4 @@ test_that("add_two_numbers throws an error on invalid input", {
   expect_error(add_two_numbers("a", 5))
   expect_error(add_two_numbers(3, "b"))
 })
+
