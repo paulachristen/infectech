@@ -3,6 +3,8 @@ Infectech
 Paula Christen
 2024-07-05
 
+This has changed... 
+
 *Introduction:* Package forecasts for policymakers. 
 
 *Installation:* usedevtools::install_github()… 
