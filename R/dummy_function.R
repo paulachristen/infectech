@@ -8,6 +8,5 @@
 #' @examples
 #' add_two_numbers(3, 5)  # Returns 8
 add_two_numbers <- function(x, y) {
-  test <- x + y
-  return(x)
+  x + y
 }
