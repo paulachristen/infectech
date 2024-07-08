@@ -17,7 +17,3 @@ The sum of x and y.
 \description{
 This function takes two numeric inputs and returns their sum.
 }
-\examples{
-add_two_numbers(3, 5)  # Returns 8
-
-}
