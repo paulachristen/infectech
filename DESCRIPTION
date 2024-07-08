@@ -1,11 +1,30 @@
-Package: infectech
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Package: infectech
+Title: Demo Package for R/Pharma CI/CD Workshop
+Version: 0.0.1
+Authors@R: 
+    person("Open", "Source", , "osauthor@noreply.pharmaverse.com", role = c("aut", "cre"))
+Description: Testing building a package.
+License: Apache License (>= 2)
+URL: https://pharmaverse.github.io/cicdworkshop.rinpharma2022
+Depends: 
+    R (>= 3.5)
+Imports: 
+    lifecycle
+Suggests:
+    covr,
+    devtools,
+    knitr,
+    lintr,
+    pkgdown,
+    rmarkdown,
+    roxygen2,
+    spelling,
+    styler,
+    testthat
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
-LazyData: true
+Language: en-US
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
