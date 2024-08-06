@@ -1,5 +1,5 @@
 # Install and load necessary packages
-usethis::use_package(c("scoringutils", "tidyverse", "readr", "dplyr"))
+#usethis::use_package(c("scoringutils", "tidyverse", "readr", "dplyr"))
 
 #' Prepare forecast data for scoring
 #'
