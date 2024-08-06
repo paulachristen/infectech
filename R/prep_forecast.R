@@ -27,11 +27,14 @@ prep_forecast_data <- function(data, ...) {
 # Prepare forecast data for scoring
 prep_forecast_data <- function(data, forecast_type, ...) {
   if (forecast_type == "quantile") {
-    result <- prep_forecast_data.quantile(data, forecast_type = forecast_type, ...)
+    result <- prep_forecast_data.quantile(data,
+                                          forecast_type = forecast_type, ...)
   } else if (forecast_type == "point") {
-    result <- prep_forecast_data.point(data, forecast_type = forecast_type, ...)
+    result <- prep_forecast_data.point(data,
+                                       forecast_type = forecast_type, ...)
   } else if (forecast_type == "sample") {
-    result <- prep_forecast_data.sample(data, forecast_type = forecast_type, ...)
+    result <- prep_forecast_data.sample(data,
+                                        forecast_type = forecast_type, ...)
   } else {
     stop(paste("Unsupported:", forecast_type))
   }
@@ -52,7 +55,8 @@ clean_numeric_columns <- function(data, numeric_columns) {
                            as.numeric(gsub("\\(|\\)", "", .x)))) %>%
     dplyr::mutate(across(any_of(numeric_columns), ~
                            ifelse(
-                             grepl("^n\\.?a\\.?n\\.?$", .x, ignore.case = TRUE), NA, .x
+                             grepl("^n\\.?a\\.?n\\.?$", .x,
+                                   ignore.case = TRUE), NA, .x
                            )))
 }
 
@@ -173,7 +177,8 @@ prep_forecast_data.point <- function(data,
                                      metric,
                                      other_characteristic_columns = NULL) {
   # Input validation
-  stopifnot(inherits(data[[forecast_date]], "Date"), inherits(data[[forecast_made]], "Date"))
+  stopifnot(inherits(data[[forecast_date]], "Date"),
+            inherits(data[[forecast_made]], "Date"))
 
   # Data cleaning
   data <- clean_numeric_columns(data, c(observed_column, predicted_column))
@@ -235,7 +240,8 @@ prep_forecast_data.sample <- function(data,
                                       sample_id,
                                       other_characteristic_columns = NULL) {
   # Input validation
-  stopifnot(inherits(data[[forecast_date]], "Date"), inherits(data[[forecast_made]], "Date"))
+  stopifnot(inherits(data[[forecast_date]], "Date"),
+            inherits(data[[forecast_made]], "Date"))
 
   # Data cleaning
   data <- clean_numeric_columns(data, c(observed_column, predicted_column))
@@ -295,7 +301,8 @@ wide_to_long_quantiles <- function(df, quantile_columns, quantile_values) {
                                          length(quantile_values))
   # Join back the preserved columns using row_id
   result_df <- long_quantiles %>%
-    left_join(df %>% select(all_of(preserve_columns), row_id), by = "row_id") %>%
+    left_join(df %>% select(all_of(preserve_columns), row_id),
+              by = "row_id") %>%
     select(-row_id)  # Remove the temporary row ID
 
   return(result_df)
