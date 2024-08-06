@@ -1,4 +1,5 @@
 library(testthat)
+library(infectech)
 
 # Create sample data (replace with your actual data structure)
 sample_point_data <- data.frame(
@@ -52,5 +53,8 @@ test_that("prep_forecast_data.quantile creates forecast_quantile object", {
   expect_s3_class(quantile_forecast, "forecast_quantile")
   expect_equal(quantile_forecast$observed, sample_quantile_data$observed)
   expect_equal(unique(quantile_forecast$quantile_level), c(0.5, 0.9))
-  expect_equal(quantile_forecast$forecast_unit, c("prediction_date", "forecast_date", "metric", "statistical_measure"))
+  expect_equal(quantile_forecast$forecast_unit, c("prediction_date",
+                                                  "forecast_date",
+                                                  "metric",
+                                                  "statistical_measure"))
 })
