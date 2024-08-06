@@ -90,7 +90,7 @@ prep_forecast_data.quantile <- function(data,
   # Input validation
   stopifnot(
     all(quantile_values > 0 & quantile_values < 1),
-    all(quantile_columns %in% colnames(data)),!is.null(quantile_values) ||
+    all(quantile_columns %in% colnames(data)), !is.null(quantile_values) ||
       length(quantile_columns) == 1,
     inherits(data[[forecast_date]], "Date"),
     inherits(data[[forecast_made]], "Date")
