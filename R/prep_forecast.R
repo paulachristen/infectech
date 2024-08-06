@@ -1,7 +1,5 @@
 # Install and load necessary packages
-list.of.packages <- c("scoringutils", "tidyverse", "readr")
-new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+usethis::use_package(c("scoringutils", "tidyverse", "readr", "dplyr"))
 
 #' Prepare forecast data for scoring
 #'
