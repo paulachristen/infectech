@@ -4,8 +4,9 @@ library(tidyverse)
 library(readr)
 library(dplyr)
 
-#' Prepare forecast data for scoring using scoringutils::as_forecast, which creates a forecast object (see ?scoringutils::as_forecast).
+#' Prepare forecast data for scoring
 #'
+#' Prepare forecast data for scoring using scoringutils::as_forecast, which creates a forecast object (see ?scoringutils::as_forecast).
 #' @param data A data frame containing the forecast data.
 #' @param forecast_type The type of forecast ("point","quantile","sample").
 #' @param observed_column The name of the column containing observed values.

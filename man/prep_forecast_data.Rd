@@ -2,7 +2,7 @@
 % Please edit documentation in R/prep_forecast.R
 \name{prep_forecast_data}
 \alias{prep_forecast_data}
-\title{Prepare forecast data for scoring using scoringutils::as_forecast, which creates a forecast object (see ?scoringutils::as_forecast).}
+\title{Prepare forecast data for scoring}
 \usage{
 prep_forecast_data(data, forecast_type, ...)
 }
