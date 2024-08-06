@@ -150,8 +150,6 @@ prep_forecast_data.quantile <- function(data,
     forecast_unit = forecast_unit  # Use the dynamically created forecast_unit
   )
 
-  # Remove duplicates
-  forecast <- forecast %>% distinct(across(-quantile_level))
   return(forecast)
 }
 
@@ -308,3 +306,4 @@ wide_to_long_quantiles <- function(df, quantile_columns, quantile_values) {
 
   return(result_df)
 }
+
