@@ -6,15 +6,19 @@ library(dplyr)
 
 #' Prepare forecast data for scoring
 #'
-#' Prepare forecast data for scoring using scoringutils::as_forecast, which creates a forecast object (see ?scoringutils::as_forecast).
+#' Prepare forecast data for scoring using scoringutils::as_forecast,
+#' which creates a forecast object (see ?scoringutils::as_forecast).
 #' @param data A data frame containing the forecast data.
 #' @param forecast_type The type of forecast ("point","quantile","sample").
 #' @param observed_column The name of the column containing observed values.
 #' @param predicted_column The name of the column containing predicted values.
 #' @param forecast_date The name of the column containing the forecast date.
-#' @param forecast_made The name of the column containing the date the forecast was made.
-#' @param metric The name of the metric being forecasted (e.g., cases, deaths, etc.).
-#' @param other_characteristic_columns (optional) Other columns to be used as characteristics.
+#' @param forecast_made The name of the column containing the date the forecast
+#' was made.
+#' @param metric The name of the metric being forecasted (e.g., cases, deaths,
+#' etc.).
+#' @param other_characteristic_columns (optional) Other columns to be used
+#' as characteristics.
 #' @return A forecast object.
 prep_forecast_data <- function(data, ...) {
   UseMethod("prep_forecast_data", data)
@@ -23,11 +27,14 @@ prep_forecast_data <- function(data, ...) {
 # Prepare forecast data for scoring
 prep_forecast_data <- function(data, forecast_type, ...) {
   if (forecast_type == "quantile") {
-    result <- prep_forecast_data.quantile(data, forecast_type = forecast_type, ...)
+    result <- prep_forecast_data.quantile(data,
+                                          forecast_type = forecast_type, ...)
   } else if (forecast_type == "point") {
-    result <- prep_forecast_data.point(data, forecast_type = forecast_type, ...)
+    result <- prep_forecast_data.point(data,
+                                       forecast_type = forecast_type, ...)
   } else if (forecast_type == "sample") {
-    result <- prep_forecast_data.sample(data, forecast_type = forecast_type, ...)
+    result <- prep_forecast_data.sample(data,
+                                        forecast_type = forecast_type, ...)
   }else {
     stop(paste("Unsupported forecast type:", forecast_type))
   }
@@ -36,15 +43,19 @@ prep_forecast_data <- function(data, forecast_type, ...) {
 
 #' Clean Numeric Columns
 #'
-#' Cleans numeric columns by removing parentheses, converting to numeric, and handling NaN values.
+#' Cleans numeric columns by removing parentheses, converting to numeric,
+#' and handling NaN values.
 #'
 #' @param data A data frame.
 #' @param numeric_columns A character vector of column names to clean.
 #' @return A data frame with cleaned numeric columns.
 clean_numeric_columns <- function(data, numeric_columns) {
   data %>%
-    dplyr::mutate(across(any_of(numeric_columns), ~ as.numeric(gsub("\\(|\\)", "", .x)))) %>%
-    dplyr::mutate(across(any_of(numeric_columns), ~ ifelse(grepl("^n\\.?a\\.?n\\.?$", .x, ignore.case = TRUE), NA, .x)))
+    dplyr::mutate(across(any_of(numeric_columns), ~
+                           as.numeric(gsub("\\(|\\)", "", .x)))) %>%
+    dplyr::mutate(across(any_of(numeric_columns), ~
+                           ifelse(grepl("^n\\.?a\\.?n\\.?$", .x,
+                                        ignore.case = TRUE), NA, .x)))
 }
 
 #' Prepare quantile forecast data
@@ -53,12 +64,16 @@ clean_numeric_columns <- function(data, numeric_columns) {
 #' @param forecast_type The type of forecast ("quantile").
 #' @param observed_column The name of the column containing observed values.
 #' @param predicted_column The name of the column containing predicted values.
-#' @param quantile_columns The name(s) of the column(s) containing quantiles (long format) or prefixes for quantile columns (wide format).
-#' @param quantile_values Numeric values of the quantiles if the input is in wide format.
+#' @param quantile_columns The name(s) of the column(s) containing
+#' quantiles (long format) or prefixes for quantile columns (wide format).
+#' @param quantile_values Numeric values of the quantiles if the input
+#' is in wide format.
 #' @param forecast_date The name of the column containing the forecast date.
-#' @param forecast_made The name of the column containing the date the forecast was made.
+#' @param forecast_made The name of the column containing the date the
+#' forecast was made.
 #' @param metric The name of the metric being forecasted.
-#' @param other_characteristic_columns (optional) Other columns to be used as characteristics.
+#' @param other_characteristic_columns (optional) Other columns to be
+#' used as characteristics.
 #' @return A forecast_quantile object.
 prep_forecast_data.quantile <- function(data,
                                         forecast_type = "quantile",
@@ -98,7 +113,7 @@ prep_forecast_data.quantile <- function(data,
     rename(observed = !!observed_column,
            forecast_date = !!forecast_date,
            prediction_date = !!forecast_made,
-           metric = !!metric)  # Use !! to unquote and evaluate the column names
+           metric = !!metric)
 
   # Only rename predicted_column if it is not NULL
   if (!is.null(predicted_column)) {
@@ -110,7 +125,8 @@ prep_forecast_data.quantile <- function(data,
   }
 
   # Prepare forecast unit dynamically
-  forecast_unit_base <- c("prediction_date", "forecast_date", "metric", "statistical_measure")
+  forecast_unit_base <- c("prediction_date", "forecast_date",
+                          "metric", "statistical_measure")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -140,9 +156,11 @@ prep_forecast_data.quantile <- function(data,
 #' @param observed_column The name of the column containing observed values.
 #' @param predicted_column The name of the column containing predicted values.
 #' @param forecast_date The name of the column containing the forecast date.
-#' @param forecast_made The name of the column containing the date the forecast was made.
+#' @param forecast_made The name of the column containing the date the
+#' forecast was made.
 #' @param metric The name of the metric being forecasted.
-#' @param other_characteristic_columns (optional) Other columns to be used as characteristics.
+#' @param other_characteristic_columns (optional) Other columns to
+#' be used as characteristics.
 #' @return A forecast_point object.
 prep_forecast_data.point <- function(data,
                                      forecast_type = "point",
@@ -170,7 +188,8 @@ prep_forecast_data.point <- function(data,
            predicted = !!predicted_column)
 
   # Prepare forecast unit dynamically
-  forecast_unit_base <- c("prediction_date", "forecast_date", "metric", "statistical_measure")
+  forecast_unit_base <- c("prediction_date", "forecast_date",
+                          "metric", "statistical_measure")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -197,10 +216,12 @@ prep_forecast_data.point <- function(data,
 #' @param observed_column The name of the column containing observed values.
 #' @param predicted_column The name of the column containing predicted values.
 #' @param forecast_date The name of the column containing the forecast date.
-#' @param forecast_made The name of the column containing the date the forecast was made.
+#' @param forecast_made The name of the column containing the date
+#' the forecast was made.
 #' @param metric The name of the metric being forecasted.
 #' @param sample_id The name of the sample_id of each forecast.
-#' @param other_characteristic_columns Optional, other columns to be used as characteristics.
+#' @param other_characteristic_columns Optional, other columns to be
+#' used as characteristics.
 #' @return A forecast_point object.
 prep_forecast_data.sample <- function(data,
                                      forecast_type = "sample",
@@ -230,7 +251,8 @@ prep_forecast_data.sample <- function(data,
            predicted = !!predicted_column)
 
   # Prepare forecast unit dynamically
-  forecast_unit_base <- c("prediction_date", "forecast_date", "metric", "statistical_measure")
+  forecast_unit_base <- c("prediction_date", "forecast_date",
+                          "metric", "statistical_measure")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -263,16 +285,20 @@ wide_to_long_quantiles <- function(df, quantile_columns, quantile_values) {
   preserve_columns <- setdiff(colnames(df), c(quantile_columns, "row_id"))
   # Reshape quantile data to long format
   long_quantiles <- df %>%
-    select(row_id, all_of(quantile_columns)) %>%  # Include row_id
-    tidyr::pivot_longer(cols = -row_id,              # Pivot everything except row_id
+    select(row_id, all_of(quantile_columns))
+  %>%
+    tidyr::pivot_longer(cols = -row_id,
                  names_to = "Variable",
-                 values_to = "predicted_column") %>%
+                 values_to = "predicted_column")
+  %>%
     dplyr::mutate(
       Variable = gsub("_", ".", Variable))
-  long_quantiles$quantile_level <- rep(quantile_values,nrow(long_quantiles)/length(quantile_values))
+  long_quantiles$quantile_level <- rep(quantile_values,nrow(long_quantiles)/
+                                         length(quantile_values))
   # Join back the preserved columns using row_id
   result_df <- long_quantiles %>%
-    left_join(df %>% select(all_of(preserve_columns), row_id), by = "row_id") %>%
+    left_join(df %>% select(all_of(preserve_columns), row_id),
+              by = "row_id") %>%
     select(-row_id)  # Remove the temporary row ID
 
   return(result_df)
