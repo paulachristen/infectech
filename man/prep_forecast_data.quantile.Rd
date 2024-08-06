@@ -36,7 +36,7 @@ prep_forecast_data.quantile(
 
 \item{metric}{The name of the metric being forecasted.}
 
-\item{other_characteristic_columns}{Optional, other columns to be used as characteristics.}
+\item{other_characteristic_columns}{(optional) Other columns to be used as characteristics.}
 }
 \value{
 A forecast_quantile object.

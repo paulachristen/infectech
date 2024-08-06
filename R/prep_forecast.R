@@ -4,10 +4,16 @@ library(tidyverse)
 library(readr)
 library(dplyr)
 
-#' Prepare forecast data for scoring
+#' Prepare forecast data for scoring using scoringutils::as_forecast, which creates a forecast object (see ?scoringutils::as_forecast).
 #'
 #' @param data A data frame containing the forecast data.
-#' @param ... Additional arguments passed to specific methods.
+#' @param forecast_type The type of forecast ("point","quantile","sample").
+#' @param observed_column The name of the column containing observed values.
+#' @param predicted_column The name of the column containing predicted values.
+#' @param forecast_date The name of the column containing the forecast date.
+#' @param forecast_made The name of the column containing the date the forecast was made.
+#' @param metric The name of the metric being forecasted (e.g., cases, deaths, etc.).
+#' @param other_characteristic_columns (optional) Other columns to be used as characteristics.
 #' @return A forecast object.
 prep_forecast_data <- function(data, ...) {
   UseMethod("prep_forecast_data", data)
@@ -51,7 +57,7 @@ clean_numeric_columns <- function(data, numeric_columns) {
 #' @param forecast_date The name of the column containing the forecast date.
 #' @param forecast_made The name of the column containing the date the forecast was made.
 #' @param metric The name of the metric being forecasted.
-#' @param other_characteristic_columns Optional, other columns to be used as characteristics.
+#' @param other_characteristic_columns (optional) Other columns to be used as characteristics.
 #' @return A forecast_quantile object.
 prep_forecast_data.quantile <- function(data,
                                         forecast_type = "quantile",
@@ -135,7 +141,7 @@ prep_forecast_data.quantile <- function(data,
 #' @param forecast_date The name of the column containing the forecast date.
 #' @param forecast_made The name of the column containing the date the forecast was made.
 #' @param metric The name of the metric being forecasted.
-#' @param other_characteristic_columns Optional, other columns to be used as characteristics.
+#' @param other_characteristic_columns (optional) Other columns to be used as characteristics.
 #' @return A forecast_point object.
 prep_forecast_data.point <- function(data,
                                      forecast_type = "point",
