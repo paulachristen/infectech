@@ -22,7 +22,7 @@ sample_quantile_data <- data.frame(
 
 # Test prep_forecast_data for point forecasts
 test_that("prep_forecast_data.point creates forecast_point object", {
-  point_forecast <- prep_forecast_data(sample_point_data,
+  point_forecast <- prep_forecast_data(data = sample_point_data,
                                        forecast_type = "point",
                                        observed_column = "observed",
                                        predicted_column = "predicted",
