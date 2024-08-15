@@ -1,8 +1,8 @@
 # Install and load necessary packages
-library(remotes)
-remotes::install_github("epiforecasts/scoringutils",
-                        dependencies = TRUE,
-                        force = TRUE)
+#library(remotes)
+#remotes::install_github("epiforecasts/scoringutils",
+#                        dependencies = TRUE,
+#                        force = TRUE)
 library(scoringutils)
 library(tidyverse)
 library(readr)
