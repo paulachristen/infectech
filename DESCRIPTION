@@ -6,7 +6,6 @@ Authors@R:
     person(given = "Paula", family = "Christen", role = c("aut", "cre"), 
     email = "paula.christen16@imperial.ac.uk")
 Description: Pacakge to conduct evaluations of Epidemic Longitudinal Forecasts.
-License: Apache License (>= 2)
 URL: URL: https://paulachristen.github.io/infectech/
 Depends: 
     R (>= 3.5)
