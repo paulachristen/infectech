@@ -9,6 +9,7 @@ test_that("prep_forecast_data.point creates forecast_point object", {
     predicted = c(12, 14, 20),
     forecast_date = as.Date(c("2023-12-01", "2023-12-02", "2023-12-03")),
     forecast_made = as.Date(c("2023-11-28", "2023-11-29", "2023-11-30")),
+    model = "test",
     metric = "cases"
   )
 
@@ -34,6 +35,7 @@ test_that("prep_forecast_data.quantile creates forecast_quantile object", {
     quantile_0.9 = c(13, 18, 24),
     forecast_date = as.Date(c("2023-12-01", "2023-12-02", "2023-12-03")),
     forecast_made = as.Date(c("2023-11-28", "2023-11-29", "2023-11-30")),
+    model = "test",
     metric = "cases"
   )
 
