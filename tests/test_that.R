@@ -1,6 +1,5 @@
 library(testthat)
 library(infectech)
-library(scoringutils)
 
 # Create sample data (replace with your actual data structure)
 sample_point_data <- data.frame(
