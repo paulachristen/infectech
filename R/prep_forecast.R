@@ -1,10 +1,3 @@
-# Install and load necessary packages
-install.packages("scoringutils")
-library(scoringutils)
-library(tidyverse)
-library(readr)
-library(dplyr)
-
 #' Prepare forecast data for scoring
 #'
 #' Prepare forecast data for scoring using scoringutils::as_forecast,
