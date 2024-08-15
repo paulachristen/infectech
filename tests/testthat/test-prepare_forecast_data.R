@@ -1,27 +1,17 @@
-library(testthat)
-library(infectech)
-library(scoringutils)
-
-# Create sample data (replace with your actual data structure)
-sample_point_data <- data.frame(
-  observed = c(10, 15, 22),
-  predicted = c(12, 14, 20),
-  forecast_date = as.Date(c("2023-12-01", "2023-12-02", "2023-12-03")),
-  forecast_made = as.Date(c("2023-11-28", "2023-11-29", "2023-11-30")),
-  metric = "cases"
-)
-
-sample_quantile_data <- data.frame(
-  observed = c(10, 15, 22),
-  quantile_0.5 = c(11, 16, 21),
-  quantile_0.9 = c(13, 18, 24),
-  forecast_date = as.Date(c("2023-12-01", "2023-12-02", "2023-12-03")),
-  forecast_made = as.Date(c("2023-11-28", "2023-11-29", "2023-11-30")),
-  metric = "cases"
-)
+context("prep_forecast_data")
 
 # Test prep_forecast_data for point forecasts
 test_that("prep_forecast_data.point creates forecast_point object", {
+
+  # create sample point data
+  sample_point_data <- data.frame(
+    observed = c(10, 15, 22),
+    predicted = c(12, 14, 20),
+    forecast_date = as.Date(c("2023-12-01", "2023-12-02", "2023-12-03")),
+    forecast_made = as.Date(c("2023-11-28", "2023-11-29", "2023-11-30")),
+    metric = "cases"
+  )
+
   point_forecast <- prep_forecast_data(data = sample_point_data,
                                        forecast_type = "point",
                                        observed_column = "observed",
@@ -36,6 +26,17 @@ test_that("prep_forecast_data.point creates forecast_point object", {
 
 # Test prep_forecast_data for quantile forecasts
 test_that("prep_forecast_data.quantile creates forecast_quantile object", {
+
+  # create sample quantile data
+  sample_quantile_data <- data.frame(
+    observed = c(10, 15, 22),
+    quantile_0.5 = c(11, 16, 21),
+    quantile_0.9 = c(13, 18, 24),
+    forecast_date = as.Date(c("2023-12-01", "2023-12-02", "2023-12-03")),
+    forecast_made = as.Date(c("2023-11-28", "2023-11-29", "2023-11-30")),
+    metric = "cases"
+  )
+
   quantile_forecast <- prep_forecast_data(data = sample_quantile_data,
                                           forecast_type = "quantile",
                                           observed_column = "observed",
