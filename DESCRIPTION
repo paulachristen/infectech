@@ -10,8 +10,7 @@ URL: URL: https://paulachristen.github.io/infectech/
 Depends: 
     R (>= 3.5)
 Imports: 
-    lifecycle,
-    readr,
+    tidyr,
     dplyr,
     scoringutils (>= 1.2.2.9000),
     magrittr
