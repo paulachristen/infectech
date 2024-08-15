@@ -55,9 +55,10 @@ prep_forecast_data <- function(data, forecast_type, ...) {
 #' @return A data frame with cleaned numeric columns.
 clean_numeric_columns <- function(data, numeric_columns) {
   data %>%
-    dplyr::mutate(across(any_of(numeric_columns),
+    dplyr::mutate(dplyr::across(any_of(numeric_columns),
                          ~ as.numeric(gsub("\\(|\\)", "", .x))),
-                  dplyr::mutate(across(any_of(numeric_columns), ~ ifelse(
+                  dplyr::mutate(dplyr::across(any_of(numeric_columns),
+                                              ~ ifelse(
                     grepl("^n\\.?a\\.?n\\.?$", .x,
                           ignore.case = TRUE), NA, .x
                   ))))
