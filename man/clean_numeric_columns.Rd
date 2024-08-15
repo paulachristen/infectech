@@ -15,5 +15,6 @@ clean_numeric_columns(data, numeric_columns)
 A data frame with cleaned numeric columns.
 }
 \description{
-Cleans numeric columns by removing parentheses, converting to numeric, and handling NaN values.
+Cleans numeric columns by removing parentheses, converting to numeric,
+and handling NaN values.
 }
