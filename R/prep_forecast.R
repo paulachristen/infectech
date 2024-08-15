@@ -121,7 +121,8 @@ prep_forecast_data.quantile <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -135,6 +136,7 @@ prep_forecast_data.quantile <- function(data,
     observed = "observed",
     predicted = "predicted",
     quantile_level = "quantile_level",
+    model = "model",
     forecast_unit = forecast_unit  # Use the dynamically created forecast_unit
   )
 
@@ -183,7 +185,8 @@ prep_forecast_data.point <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -196,6 +199,7 @@ prep_forecast_data.point <- function(data,
     forecast_type = "point",
     observed = "observed",
     predicted = "predicted",
+    model = "model",
     forecast_unit = forecast_unit
   )
 
@@ -247,7 +251,8 @@ prep_forecast_data.sample <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
 
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
@@ -262,6 +267,7 @@ prep_forecast_data.sample <- function(data,
     observed = "observed",
     predicted = "predicted",
     sample_id = "sample_id",
+    model = "model",
     forecast_unit = forecast_unit
   )
 
