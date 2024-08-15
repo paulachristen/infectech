@@ -10,10 +10,11 @@ URL: URL: https://paulachristen.github.io/infectech/
 Depends: 
     R (>= 3.5)
 Imports: 
-    lifecycle, 
-    readr, 
-    dplyr, 
-    scoringutils 
+    lifecycle,
+    readr,
+    dplyr,
+    scoringutils,
+    magrittr
 Suggests:
     covr,
     devtools,
@@ -31,4 +32,4 @@ Encoding: UTF-8
 License: MIT + file LICENSE
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
