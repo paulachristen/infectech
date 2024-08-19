@@ -3,7 +3,12 @@
 <url><loc>/LICENSE-text.html</loc></url>
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
-<url><loc>/reference/add_two_numbers.html</loc></url>
+<url><loc>/reference/clean_numeric_columns.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/pipe.html</loc></url>
+<url><loc>/reference/prep_forecast_data.html</loc></url>
+<url><loc>/reference/prep_forecast_data.point.html</loc></url>
+<url><loc>/reference/prep_forecast_data.quantile.html</loc></url>
+<url><loc>/reference/prep_forecast_data.sample.html</loc></url>
 </urlset>
 
