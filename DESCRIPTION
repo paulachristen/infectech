@@ -1,12 +1,13 @@
 Type: Package
 Package: infectech
-Title: Demo Package for R/Pharma CI/CD Workshop
+Title: Evaluating Epidemic Longitudinal Forecasts
 Version: 0.0.1
 Authors@R: 
-    person("Open", "Source", , "osauthor@noreply.pharmaverse.com", role = c("aut", "cre"))
-Description: Testing building a package.
+    person(given = "Paula", family = "Christen", role = c("aut", "cre"), 
+    email = "paula.christen16@imperial.ac.uk")
+Description: Pacakge to conduct evaluations of Epidemic Longitudinal Forecasts.
 License: Apache License (>= 2)
-URL: https://pharmaverse.github.io/cicdworkshop.rinpharma2022
+URL: https://paulachristen.github.io/infectech/
 Depends: 
     R (>= 3.5)
 Imports: 
