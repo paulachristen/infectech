@@ -11,7 +11,10 @@ URL: https://paulachristen.github.io/infectech/
 Depends: 
     R (>= 3.5)
 Imports: 
-    lifecycle
+    lifecycle, 
+    readr, 
+    dplyr, 
+    scoringutils 
 Suggests:
     covr,
     devtools,

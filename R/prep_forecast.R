@@ -3,10 +3,6 @@ library(remotes)
 remotes::install_github("epiforecasts/scoringutils",
                         dependencies = TRUE,
                         force = TRUE)
-library(scoringutils)
-library(tidyverse)
-library(readr)
-library(dplyr)
 
 #' Prepare forecast data for scoring
 #'
