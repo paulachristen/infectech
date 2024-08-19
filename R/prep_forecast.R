@@ -47,13 +47,12 @@ prep_forecast_data <- function(data, forecast_type, ...) {
 #' @return A data frame with cleaned numeric columns.
 clean_numeric_columns <- function(data, numeric_columns) {
   data %>%
-    dplyr::mutate(dplyr::across(any_of(numeric_columns),
-                         ~ as.numeric(gsub("\\(|\\)", "", .x))),
-                  dplyr::mutate(dplyr::across(any_of(numeric_columns),
-                                              ~ ifelse(
-                    grepl("^n\\.?a\\.?n\\.?$", .x,
-                          ignore.case = TRUE), NA, .x
-                  ))))
+    dplyr::mutate(
+      across(any_of(numeric_columns), ~ as.numeric(gsub("\\(|\\)", "", .x)))
+    ) %>%
+    dplyr::mutate(
+      across(any_of(numeric_columns), ~ ifelse(grepl("^n\\.?a\\.?n\\.?$", .x, ignore.case = TRUE), NA, .x))
+    )
 }
 
 #' Prepare quantile forecast data
@@ -283,7 +282,7 @@ wide_to_long_quantiles <- function(df, quantile_columns, quantile_values) {
   }
 
   # Identify columns to preserve (excluding quantile columns, adding a row ID)
-  df <- df %>% dplyr::mutate(row_id = row_number())  # Create a temp. row ID
+  df <- df %>% dplyr::mutate(row_id = dplyr::row_number())  # Create a temp. row ID
   preserve_columns <- setdiff(colnames(df), c(quantile_columns, "row_id"))
 
   # Reshape quantile data to long format
