@@ -1,25 +1,13 @@
-# Install and load necessary packages
-install.packages("scoringutils")
-library(scoringutils)
-library(tidyverse)
-library(readr)
-library(dplyr)
-
 #' Prepare forecast data for scoring
 #'
 #' Prepare forecast data for scoring using scoringutils::as_forecast,
 #' which creates a forecast object (see ?scoringutils::as_forecast).
 #' @param data A data frame containing the forecast data.
 #' @param forecast_type The type of forecast ("point","quantile","sample").
-#' @param observed_column The name of the column containing observed values.
-#' @param predicted_column The name of the column containing predicted values.
-#' @param forecast_date The name of the column containing the forecast date.
-#' @param forecast_made The name of the column containing the date the forecast
-#' was made.
-#' @param metric The name of the metric being forecasted (e.g., cases, deaths,
-#' etc.).
-#' @param other_characteristic_columns (optional) Other columns to be used
-#' as characteristics.
+#' @param ... Further arguments passed to
+#'   \code{\link{prep_forecast_data.quantile}},
+#'   \code{\link{prep_forecast_data.point}},
+#'   \code{\link{prep_forecast_data.sample}}
 #' @return A forecast object.
 prep_forecast_data <- function(data, ...) {
   UseMethod("prep_forecast_data", data)
@@ -49,14 +37,16 @@ prep_forecast_data <- function(data, forecast_type, ...) {
 #'
 #' @param data A data frame.
 #' @param numeric_columns A character vector of column names to clean.
+#' @importFrom dplyr across all_of any_of left_join rename select
 #' @return A data frame with cleaned numeric columns.
 clean_numeric_columns <- function(data, numeric_columns) {
   data %>%
-    dplyr::mutate(across(any_of(numeric_columns), ~ as.numeric(gsub("\\(|\\)", "", .x))),
-                  dplyr::mutate(across(any_of(numeric_columns), ~ ifelse(
-                    grepl("^n\\.?a\\.?n\\.?$", .x,
-                          ignore.case = TRUE), NA, .x
-                  ))))
+    dplyr::mutate(
+      across(any_of(numeric_columns), ~ as.numeric(gsub("\\(|\\)", "", .x)))
+      ) %>%
+    dplyr::mutate(
+      across(any_of(numeric_columns), ~ ifelse(grepl("^n\\.?a\\.?n\\.?$", .x, ignore.case = TRUE), NA, .x))
+      )
 }
 
 #' Prepare quantile forecast data
@@ -131,7 +121,8 @@ prep_forecast_data.quantile <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -139,12 +130,13 @@ prep_forecast_data.quantile <- function(data,
   }
 
   # Conversion to scoringutils forecast object
-  forecast <- scoringutils::as_forecast(
+  forecast <- scoringutils::as_forecast_quantile(
     forecast_data,
     forecast_type = "quantile",
     observed = "observed",
     predicted = "predicted",
     quantile_level = "quantile_level",
+    model = "model",
     forecast_unit = forecast_unit  # Use the dynamically created forecast_unit
   )
 
@@ -193,7 +185,8 @@ prep_forecast_data.point <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -201,11 +194,12 @@ prep_forecast_data.point <- function(data,
   }
 
   # Conversion to scoringutils forecast object
-  forecast <- scoringutils::as_forecast(
+  forecast <- scoringutils::as_forecast_point(
     data,
     forecast_type = "point",
     observed = "observed",
     predicted = "predicted",
+    model = "model",
     forecast_unit = forecast_unit
   )
 
@@ -257,21 +251,26 @@ prep_forecast_data.sample <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
+
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
     forecast_unit <- forecast_unit_base
   }
+
   # Conversion to scoringutils forecast object
-  forecast <- scoringutils::as_forecast(
+  forecast <- scoringutils::as_forecast_sample(
     data,
     forecast_type = "sample",
     observed = "observed",
     predicted = "predicted",
     sample_id = "sample_id",
+    model = "model",
     forecast_unit = forecast_unit
   )
+
   return(forecast)
 }
 
@@ -284,8 +283,9 @@ wide_to_long_quantiles <- function(df, quantile_columns, quantile_values) {
   }
 
   # Identify columns to preserve (excluding quantile columns, adding a row ID)
-  df <- df %>% dplyr::mutate(row_id = row_number())  # Create a temp. row ID
+  df <- df %>% dplyr::mutate(row_id = dplyr::row_number())  # Create a temp. row ID
   preserve_columns <- setdiff(colnames(df), c(quantile_columns, "row_id"))
+
   # Reshape quantile data to long format
   long_quantiles <- df %>%
     select(row_id, all_of(quantile_columns)) %>%
@@ -293,9 +293,11 @@ wide_to_long_quantiles <- function(df, quantile_columns, quantile_values) {
                         names_to = "Variable",
                         values_to = "predicted_column") %>%
     dplyr::mutate(Variable = gsub("_", ".", Variable))
+
   long_quantiles$quantile_level <- rep(quantile_values,
                                        nrow(long_quantiles) /
                                          length(quantile_values))
+
   # Join back the preserved columns using row_id
   result_df <- long_quantiles %>%
     left_join(df %>% select(all_of(preserve_columns), row_id),

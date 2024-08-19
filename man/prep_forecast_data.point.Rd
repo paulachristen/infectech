@@ -26,11 +26,13 @@ prep_forecast_data.point(
 
 \item{forecast_date}{The name of the column containing the forecast date.}
 
-\item{forecast_made}{The name of the column containing the date the forecast was made.}
+\item{forecast_made}{The name of the column containing the date the
+forecast was made.}
 
 \item{metric}{The name of the metric being forecasted.}
 
-\item{other_characteristic_columns}{(optional) Other columns to be used as characteristics.}
+\item{other_characteristic_columns}{(optional) Other columns to
+be used as characteristics.}
 }
 \value{
 A forecast_point object.

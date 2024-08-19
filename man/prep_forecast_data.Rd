@@ -11,21 +11,15 @@ prep_forecast_data(data, forecast_type, ...)
 
 \item{forecast_type}{The type of forecast ("point","quantile","sample").}
 
-\item{observed_column}{The name of the column containing observed values.}
-
-\item{predicted_column}{The name of the column containing predicted values.}
-
-\item{forecast_date}{The name of the column containing the forecast date.}
-
-\item{forecast_made}{The name of the column containing the date the forecast was made.}
-
-\item{metric}{The name of the metric being forecasted (e.g., cases, deaths, etc.).}
-
-\item{other_characteristic_columns}{(optional) Other columns to be used as characteristics.}
+\item{...}{Further arguments passed to
+\code{\link{prep_forecast_data.quantile}},
+\code{\link{prep_forecast_data.point}},
+\code{\link{prep_forecast_data.sample}}}
 }
 \value{
 A forecast object.
 }
 \description{
-Prepare forecast data for scoring using scoringutils::as_forecast, which creates a forecast object (see ?scoringutils::as_forecast).
+Prepare forecast data for scoring using scoringutils::as_forecast,
+which creates a forecast object (see ?scoringutils::as_forecast).
 }

@@ -1,16 +1,19 @@
 Type: Package
 Package: infectech
-Title: Demo Package for R/Pharma CI/CD Workshop
+Title: Evaluating Epidemic Longitudinal Forecasts
 Version: 0.0.1
 Authors@R: 
-    person("Open", "Source", , "osauthor@noreply.pharmaverse.com", role = c("aut", "cre"))
-Description: Testing building a package.
-License: Apache License (>= 2)
-URL: https://pharmaverse.github.io/cicdworkshop.rinpharma2022
+    person(given = "Paula", family = "Christen", role = c("aut", "cre"), 
+    email = "paula.christen16@imperial.ac.uk")
+Description: Pacakge to conduct evaluations of Epidemic Longitudinal Forecasts.
+URL: URL: https://paulachristen.github.io/infectech/
 Depends: 
     R (>= 3.5)
 Imports: 
-    lifecycle
+    tidyr,
+    dplyr,
+    scoringutils (>= 1.2.2.9000),
+    magrittr
 Suggests:
     covr,
     devtools,
@@ -25,6 +28,9 @@ Suggests:
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
+License: MIT + file LICENSE
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
+Remotes:  
+    epiforecasts/scoringutils
