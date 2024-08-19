@@ -127,7 +127,8 @@ prep_forecast_data.quantile <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -141,6 +142,7 @@ prep_forecast_data.quantile <- function(data,
     observed = "observed",
     predicted = "predicted",
     quantile_level = "quantile_level",
+    model = "model",
     forecast_unit = forecast_unit  # Use the dynamically created forecast_unit
   )
 
@@ -189,7 +191,8 @@ prep_forecast_data.point <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -202,6 +205,7 @@ prep_forecast_data.point <- function(data,
     forecast_type = "point",
     observed = "observed",
     predicted = "predicted",
+    model = "model",
     forecast_unit = forecast_unit
   )
 
@@ -253,7 +257,8 @@ prep_forecast_data.sample <- function(data,
   forecast_unit_base <- c("prediction_date",
                           "forecast_date",
                           "metric",
-                          "statistical_measure")
+                          "statistical_measure",
+                          "model")
   if (!is.null(other_characteristic_columns)) {
     forecast_unit <- c(forecast_unit_base, other_characteristic_columns)
   } else {
@@ -267,6 +272,7 @@ prep_forecast_data.sample <- function(data,
     observed = "observed",
     predicted = "predicted",
     sample_id = "sample_id",
+    model = "model",
     forecast_unit = forecast_unit
   )
 
@@ -282,7 +288,7 @@ wide_to_long_quantiles <- function(df, quantile_columns, quantile_values) {
   }
 
   # Identify columns to preserve (excluding quantile columns, adding a row ID)
-  df <- df %>% dplyr::mutate(row_id = dplyr::row_number())  # Create a temp. row ID
+  df <- df %>% dplyr::mutate(row_id = dplyr::row_number())  # Create temp row ID
   preserve_columns <- setdiff(colnames(df), c(quantile_columns, "row_id"))
 
   # Reshape quantile data to long format
