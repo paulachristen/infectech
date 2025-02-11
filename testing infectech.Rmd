@@ -267,4 +267,29 @@ plot_forecasts(plot_df,
 
 
 
+#Score forecast
+```{r}
+scores <- df_forecast |> 
+  score()
 
+summarised <- scores |> 
+                summarise_scores(by = c("metric","scenario", "model")) |>
+                summarise_scores(by = c("metric","scenario", "model"), fun = signif, digits = 3)
+
+correlations <- scores %>%
+  summarise_scores(by = c("metric","scenario", "model")) %>%
+  get_correlations()
+
+plot_correlations(correlations, digits = 2)
+
+```
+
+
+
+#Score the forecast
+
+```{r pressure, echo=FALSE}
+
+scores <- df_forecast |> 
+  scoringutils::score()
+```
